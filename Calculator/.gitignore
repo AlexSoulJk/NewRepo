@@ -2,4 +2,8 @@ Calculator.sln
 Calculator.vcxproj
 Calculator.vcxproj.filters
 CppProperties.json
+Calculator.vcxproj.user
+.vs/Calculator
+x64/Debug
+Debug/
 .gitattributes
