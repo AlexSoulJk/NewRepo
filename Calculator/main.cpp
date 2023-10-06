@@ -24,4 +24,5 @@ int main() {
 	Parser* p = new ParserPolandAlg();
 	std::string expression = "-4.7 2.7 3 sin *";
 	cout << p->parse(expression);
+	cout << "Change";
 }
