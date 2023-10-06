@@ -17,5 +17,9 @@ public:
 	Operation& operator=(Operation const&) = default;
 	Operation& operator=(Operation&&) = default;
 	~Operation(void) = default;
+	double getValue(double a, double b) {
+		return operation(a, b);
+	};
+	bool isBinary() { return true; };
 };
 

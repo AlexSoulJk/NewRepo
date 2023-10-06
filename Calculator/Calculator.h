@@ -12,7 +12,7 @@ class Calculator
 	Calculator() = default;
 	Calculator(const Calculator&);
 	Calculator& operator=(Calculator&);
-	Operations list_of_operations;
+	
 public:
 	static Calculator& getInstance() {
 		static Calculator instance;

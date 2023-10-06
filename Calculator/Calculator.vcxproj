@@ -131,11 +131,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Operation.cpp" />
     <ClCompile Include="Operations.cpp" />
+    <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="ParserPolandAlg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Calculator.h" />
     <ClInclude Include="Operation.h" />
     <ClInclude Include="Operations.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="ParserPolandAlg.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

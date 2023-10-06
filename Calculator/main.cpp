@@ -1,5 +1,6 @@
 #include<iostream>
 #include "Calculator.h"
+#include "ParserPolandAlg.h"
 using namespace std;
 
 /*This is a function that will check stop calculation*/
@@ -9,8 +10,8 @@ bool IsFinish(void) {
 	cin >> c;
 	return c == 'S';
 }
-int main() {
-	bool is_finish = false;
+/*
+bool is_finish = false;
 	Calculator& app = Calculator::getInstance();
 	while (!is_finish) {
 		app.start();
@@ -18,4 +19,9 @@ int main() {
 		is_finish = IsFinish();
 	}
 	cout << "Hello wrld!";
+*/
+int main() {
+	Parser* p = new ParserPolandAlg();
+	std::string expression = "-4.7 2.7 3 sin *";
+	cout << p->parse(expression);
 }
