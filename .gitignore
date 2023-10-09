@@ -1,5 +1,6 @@
 Calculator.sln
 Calculator.vcxproj
 Calculator.vcxproj.filters
+.vs/
 CppProperties.json
 .gitattributes
