@@ -1,4 +1,6 @@
+#pragma once
 #include "Operation.h"
+
 class Loader {
 	Loader() = default;
 	Loader(Loader const &) = delete;
@@ -11,6 +13,6 @@ public:
 		static Loader instance;
 		return instance;
 	}
-	std::function<double(double, double)> load(string const&);
+	//std::function<double(double, double)> load(string const&);
 
 };

@@ -1,6 +1,7 @@
 #include<iostream>
 #include "Calculator.h"
 #include "ParserPolandAlg.h"
+#include <Windows.h>
 using namespace std;
 
 /*This is a function that will check stop calculation*/
@@ -20,9 +21,11 @@ bool is_finish = false;
 	}
 	cout << "Hello wrld!";
 */
+typedef double (*FP) (double);
 int main() {
-	Parser* p = new ParserPolandAlg();
-	std::string expression = "-4.7 2.7 3 sin *";
-	cout << p->parse(expression);
-	cout << "Change";
+	HINSTANCE load;
+	load = LoadLibrary(L"./config\\DLibtg.dll");
+	FP tg = (FP)GetProcAddress(load, "uno");
+	cout << tg(2);
+	FreeLibrary(load);
 }
