@@ -13,6 +13,5 @@ public:
 		static Loader instance;
 		return instance;
 	}
-	//std::function<double(double, double)> load(string const&);
 
 };

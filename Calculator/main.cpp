@@ -21,11 +21,42 @@ bool is_finish = false;
 	}
 	cout << "Hello wrld!";
 */
-typedef double (*FP) (double);
-int main() {
-	HINSTANCE load;
+
+/*
+HINSTANCE load;
 	load = LoadLibrary(L"./config\\DLibtg.dll");
 	FP tg = (FP)GetProcAddress(load, "uno");
 	cout << tg(2);
 	FreeLibrary(load);
+*/
+/*
+try {
+		res = pars.convertIntoPoland(expression);
+	}
+	catch (std::exception& l) {
+		cout << l.what();
+		exit(1);
+	}
+	for (int i = 0; i < res.size(); i++) {
+		cout << res[i] << " " << endl;
+	}
+*/
+
+/* Test string:
+"1/2 + sin(1/2)"
+
+* 
+*/
+typedef double (*FP) (double);
+int main() {
+	std::string expression = "sin(1/2))";
+	ParserPolandAlg pars = ParserPolandAlg();
+	try {
+		pars.parse(expression);
+	}
+	catch (std::exception& l) {
+		cout << l.what();
+	}
+	
+	
 }

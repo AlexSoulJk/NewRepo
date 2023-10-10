@@ -3,7 +3,7 @@
 #pragma once
 using unary = double(*)(double);
 
-class Operation_unary
+class Operation_unary : public Operation
 {
 private:
 	unary operation;
