@@ -1,5 +1,4 @@
 #include "Operation.h"
-
 #pragma once
 using unary = double(*)(double);
 

@@ -7,11 +7,11 @@ class Loader {
 	Loader& operator=(Loader const&) = delete;
 	Loader& operator=(Loader&&) = delete;
 	Loader(Loader&&) = delete;
-	string const path = "./config\\DLib";
+	std::string const path = "./config\\DLib";
 public:
 	static Loader& getInstance() {
 		static Loader instance;
 		return instance;
 	}
-	void loadFunction(string const& dllname, Operations& operations);
+	void loadFunction(std::string const& dllname, Operations& operations);
 };

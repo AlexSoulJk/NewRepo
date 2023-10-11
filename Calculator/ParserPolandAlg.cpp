@@ -1,5 +1,4 @@
 #include "ParserPolandAlg.h"
-#include <stack>
 #include <sstream>
 #include <vector>
 
@@ -31,7 +30,6 @@ std::string CatchFunction(std::string const& expression, int& index) {
 }
 std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & expression_) {
     std::string expression = expression_;
-	std::string res;
 	std::string cur_number;
 	std::string current_fun = "";
 	std::string::size_type ind;
@@ -51,45 +49,13 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 	while (i < expression.size()) {
 		cur_symb = expression[i];
 		if (isdigit(cur_symb)){
-			try {
-				cur_number = CatchNumber(expression, i);
-			}catch(std::exception&l) {
-				throw std::exception(l.what());
-				result.clear();
-				return result;
-			}
+			cur_number = CatchNumber(expression, i);
 			result.push_back(cur_number);
 		}
 		else if (isalpha(cur_symb)) {
-
-			try {
-				current_fun = CatchFunction(expression, i);
-			}
-			catch (std::exception& l) {
-				throw std::exception(l.what());
-				result.clear();
-				return result;
-			}
+			current_fun = CatchFunction(expression, i);
 			//thinking about downloading func
-			try {
-				if (list_of_operations.isFunContains(current_fun)) {
-					try {
-						loader.loadFunction(current_fun,list_of_operations);
-					}
-					catch (std::exception& l) {
-						throw std::exception(l.what());
-						result.clear();
-						break;
-					}
-				}
-			}
-			catch (std::exception& l) {
-				throw std::exception(l.what());
-				result.clear();
-				return result;
-			}
-			
-
+			if (!list_of_operations.isFunContains(current_fun)) loader.loadFunction(current_fun,list_of_operations);
 			while (!stack.empty()) {
 				if (list_of_operations.getPriority(current_fun) <= list_of_operations.getPriority(stack.top())) {
 					result.push_back(stack.top());
@@ -100,12 +66,7 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 					break;
 				}
 			}
-
-			if (stack.empty()) {
-				stack.push(std::move(current_fun));
-			}
-
-			
+			if (stack.empty()) stack.push(std::move(current_fun));
 		}
 		else if (cur_symb == '(') {
 			stack.push({ cur_symb });
@@ -119,8 +80,6 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 
 			if (stack.empty()) {
 				throw std::exception("Not enough (");
-				result.clear();
-				return result;
 			}
 			stack.pop();
 			i++;
@@ -146,8 +105,6 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 		current_fun = stack.top();
 		if ( current_fun == "(") {
 			throw std::exception("Not enough )");
-			result.clear();
-			break;
 		}
 		result.push_back(std::move(current_fun));
 		stack.pop();
@@ -161,13 +118,9 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 double ParserPolandAlg::parse(std::string const & expression_) {
     std::stack<double> arguments;
 	std::vector<std::string> expression;
-	try {
-		expression = convertIntoPoland(expression_);
-	}
-	catch (std::exception& l) {
-		throw std::exception(l.what());
-		return 0;
-	}
+
+	expression = convertIntoPoland(expression_);
+
 	
     double argument1 = 0, argument2 = 0;
     double result = 0;
@@ -175,24 +128,25 @@ double ParserPolandAlg::parse(std::string const & expression_) {
 	for (auto& token : expression) {
         if (isdigit(token[0])) arguments.push(std::stod(token));
         else {
-			cout << "[" << number_of_iteration << "] ";
+			std::cout << "[" << number_of_iteration << "] ";
 			argument1 = arguments.top();
 			arguments.pop();
             if (list_of_operations.isFunBinary(token)) {
 				argument2 = arguments.top();
 				arguments.pop();
+
                 result = list_of_operations.getValue(token)->getValue(argument2, argument1);
 				arguments.push(result);
-				cout << argument2 << " " << token << " " << argument1 << " = " << result << std::endl;
+				std::cout << argument2 << " " << token << " " << argument1 << " = " << result << std::endl;
             }
             else if(list_of_operations.isFunUnary(token)) {
                 result = list_of_operations.getValue(token)->getValue(argument1);
 				arguments.push(result);
-				cout << token << "(" << argument1 << ")" << " = " << result << std::endl;
+				std::cout << token << "(" << argument1 << ")" << " = " << result << std::endl;
             }
 			number_of_iteration++;
         }
     }
-	cout << "The result is " << arguments.top();
+	std::cout << "The result is " << arguments.top() << std::endl;
     return arguments.top();  // результат будет находиться на вершине стека
 };

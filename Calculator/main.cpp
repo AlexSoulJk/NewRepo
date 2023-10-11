@@ -17,14 +17,14 @@ bool IsFinish(void) {
 	return c == 'S';
 }
 /*
-bool is_finish = false;
-	Calculator& app = Calculator::getInstance();
+Parser* parser = new ParserPolandAlg();
+	bool is_finish = false;
+	Calculator& app = Calculator::getInstance(parser);
 	while (!is_finish) {
 		app.start();
-		cout << "=" << app.Evalue() << endl;
+		app.Evalue();
 		is_finish = IsFinish();
 	}
-	cout << "Hello wrld!";
 */
 
 /*
@@ -35,15 +35,13 @@ HINSTANCE load;
 	FreeLibrary(load);
 */
 /*
-try {
-		res = pars.convertIntoPoland(expression);
+	std::string expression = "log(0) + sin(1/2)";
+	ParserPolandAlg pars = ParserPolandAlg();
+	try {
+		pars.parse(expression);
 	}
 	catch (std::exception& l) {
 		cout << l.what();
-		exit(1);
-	}
-	for (int i = 0; i < res.size(); i++) {
-		cout << res[i] << " " << endl;
 	}
 */
 
@@ -64,13 +62,12 @@ std::string expression = "sin(1/2))";
 */
 
 int main() {
-
+	Parser* parser = new ParserPolandAlg();
 	bool is_finish = false;
-	Calculator& app = Calculator::getInstance();
+	Calculator& app = Calculator::getInstance(parser);
 	while (!is_finish) {
 		app.start();
-		cout << app.Evalue() << endl;
-		is_finish = IsFinish();
+		app.Evalue();
+		//is_finish = IsFinish();
 	}
-	
 }

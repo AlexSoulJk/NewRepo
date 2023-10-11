@@ -1,27 +1,22 @@
-#include <iostream>
-#include <string>
+#pragma once
 #include <map>
 #include "Operation_binary.h"
 #include "Operation_unary.h"
-#pragma once
-using namespace std;
-enum class FunType {unary, binary};
-using priority_t = int;
+
+
 class Operations
 {
+	std::map<std::string, Operation*> operations;
 
-	map<string, Operation*> operations;
-	map<string, FunType> operationstype;
-	map<string, priority_t> priority;
 public:	
 	Operations();
-	Operations(string const& name_of_function);
-	Operation* getValue(string const& name_of_function);
-	bool isFunBinary(string const& name_of_fun);
-	bool isFunUnary(string const& name_of_fun);
-	bool isFunContains(string const& name_of_fun);
-	priority_t getPriority(string const& name_of_function);
-	void addBinaryFunction(Operation*, priority_t priority, string const& functionName) noexcept;
-	void addUnaryFunction(Operation*, priority_t priority, string const& functionName) noexcept;
+	Operations(std::string const& name_of_function);
+	Operation* getValue(std::string const& name_of_function);
+	bool isFunBinary(std::string const& name_of_fun);
+	bool isFunUnary(std::string const& name_of_fun);
+	bool isFunContains(std::string const& name_of_fun);
+	priority_t getPriority(std::string const& name_of_function);
+	void addBinaryFunction(Operation*, priority_t priority, std::string const& functionName) noexcept;
+	void addUnaryFunction(Operation*, priority_t priority, std::string const& functionName) noexcept;
 };
 

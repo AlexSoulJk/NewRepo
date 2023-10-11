@@ -1,10 +1,13 @@
 #include <iostream>
-#include <string>
+#include <stack>
 #pragma once
-using namespace std;
+
+enum class FunType { unary, binary };
+using priority_t = int;
 
 class Operation
 {
+	priority_t priority;
 public:
 	Operation() = default;
 	Operation(Operation const&) = default;
@@ -12,13 +15,6 @@ public:
 	Operation& operator=(Operation const&) = default;
 	Operation& operator=(Operation&&) = default;
 	~Operation(void) = default;
-	virtual double getValue(double a, double b) const {
-		throw std::exception();
-		return INFINITY;
-	}
-	virtual double getValue(double a) const {
-		throw std::exception();
-		return INFINITY;
-	}
+	virtual double getValue(std::stack<double>&) const = 0;
 };
 

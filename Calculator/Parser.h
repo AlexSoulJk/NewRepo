@@ -7,10 +7,11 @@ class Parser
 {
 	
 protected:
-	Operations& list_of_operations;
+	Operations list_of_operations;
 	Loader& loader;
 
 public:
 	virtual double parse(std::string const& expression) { return INFINITY; };
+	Parser() : list_of_operations(), loader(Loader::getInstance()){};
 };
 
