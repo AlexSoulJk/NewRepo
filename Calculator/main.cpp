@@ -1,8 +1,13 @@
 #include<iostream>
 #include "Calculator.h"
 #include "ParserPolandAlg.h"
-#include <Windows.h>
+
 using namespace std;
+
+
+/* template of .dll
+
+*/
 
 /*This is a function that will check stop calculation*/
 bool IsFinish(void) {
@@ -42,14 +47,8 @@ try {
 	}
 */
 
-/* Test string:
-"1/2 + sin(1/2)"
-
-* 
-*/
-typedef double (*FP) (double);
-int main() {
-	std::string expression = "sin(1/2))";
+/*
+std::string expression = "sin(1/2))";
 	ParserPolandAlg pars = ParserPolandAlg();
 	try {
 		pars.parse(expression);
@@ -57,6 +56,21 @@ int main() {
 	catch (std::exception& l) {
 		cout << l.what();
 	}
-	
+*/
+/* Test string:
+"1/2 + sin(1/2)"
+
+* 
+*/
+
+int main() {
+
+	bool is_finish = false;
+	Calculator& app = Calculator::getInstance();
+	while (!is_finish) {
+		app.start();
+		cout << app.Evalue() << endl;
+		is_finish = IsFinish();
+	}
 	
 }

@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include "Loader.h"
 #include "Operation_binary.h"
 #include "Operation_unary.h"
 #pragma once
@@ -14,9 +13,6 @@ class Operations
 	map<string, Operation*> operations;
 	map<string, FunType> operationstype;
 	map<string, priority_t> priority;
-
-	Loader& loader;
-
 public:	
 	Operations();
 	Operations(string const& name_of_function);
@@ -25,5 +21,7 @@ public:
 	bool isFunUnary(string const& name_of_fun);
 	bool isFunContains(string const& name_of_fun);
 	priority_t getPriority(string const& name_of_function);
+	void addBinaryFunction(Operation*, priority_t priority, string const& functionName) noexcept;
+	void addUnaryFunction(Operation*, priority_t priority, string const& functionName) noexcept;
 };
 

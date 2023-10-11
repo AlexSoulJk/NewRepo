@@ -55,7 +55,8 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 				cur_number = CatchNumber(expression, i);
 			}catch(std::exception&l) {
 				throw std::exception(l.what());
-				break;
+				result.clear();
+				return result;
 			}
 			result.push_back(cur_number);
 		}
@@ -66,15 +67,26 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 			}
 			catch (std::exception& l) {
 				throw std::exception(l.what());
-				break;
+				result.clear();
+				return result;
 			}
 			//thinking about downloading func
 			try {
-				list_of_operations.isFunContains(current_fun);
+				if (list_of_operations.isFunContains(current_fun)) {
+					try {
+						loader.loadFunction(current_fun,list_of_operations);
+					}
+					catch (std::exception& l) {
+						throw std::exception(l.what());
+						result.clear();
+						break;
+					}
+				}
 			}
 			catch (std::exception& l) {
 				throw std::exception(l.what());
-				break;
+				result.clear();
+				return result;
 			}
 			
 
@@ -135,7 +147,7 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 		if ( current_fun == "(") {
 			throw std::exception("Not enough )");
 			result.clear();
-			return result;
+			break;
 		}
 		result.push_back(std::move(current_fun));
 		stack.pop();

@@ -1,6 +1,6 @@
 #include "Operations.h"
 
-Operations::Operations() : loader(Loader::getInstance()) {
+Operations::Operations() {
 
 	operations["+"] = (new Operation_binary([](double a, double b) {return a + b; }));
 	operations["-"] = (new Operation_binary([](double a, double b) {return a - b; }));
@@ -56,4 +56,16 @@ bool Operations::isFunUnary(string const& name_of_function){
 	}
 	throw std::exception();
 	return false;
+}
+
+void Operations::addUnaryFunction(Operation* function, priority_t priority_, string const& functionName) noexcept {
+	operations[functionName] = function;
+	operationstype[functionName] = FunType::unary;
+	priority[functionName] = priority_;
+}
+
+void Operations::addBinaryFunction(Operation* function, priority_t priority_, string const& functionName) noexcept {
+	operations[functionName] = function;
+	operationstype[functionName] = FunType::binary;
+	priority[functionName] = priority_;
 }

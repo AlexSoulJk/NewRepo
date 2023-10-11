@@ -7,8 +7,8 @@ class Parser
 {
 	
 protected:
-	Operations list_of_operations;
-	Loader* loader;
+	Operations& list_of_operations;
+	Loader& loader;
 
 public:
 	virtual double parse(std::string const& expression) { return INFINITY; };
