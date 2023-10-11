@@ -1,6 +1,7 @@
 #include "Loader.h"
-#include <Windows.h>
+
 using prior = int(*)(void);
+
 void Loader::loadFunction(std::string const& funName, Operations& operations) {
 	HMODULE load;
 
@@ -19,13 +20,14 @@ void Loader::loadFunction(std::string const& funName, Operations& operations) {
 			unary unaryFunction = (unary)GetProcAddress(load, "unary");
 
 			if (unaryFunction) { 
-				Operation* tmp = new Operation_unary(unaryFunction);
-				operations.addUnaryFunction(tmp, priority(), funName);
+				Operation* tmp = new Operation_unary(unaryFunction, priority());
+				operations.addFunction(tmp,funName);
 				return;
 			}
 			throw std::exception(("Problem with loading" + funName).c_str());
 		}
-		Operation* tmp = new Operation_binary(binaryFunction);
-		operations.addBinaryFunction(tmp, priority(), funName);
+		Operation* tmp = new Operation_binary(binaryFunction, priority());
+		operations.addFunction(tmp,funName);
 	}
+	throw std::exception(("Problem with find Dlib" + funName + ".dll").c_str());
 }

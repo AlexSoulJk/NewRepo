@@ -1,6 +1,6 @@
 #pragma once
 #include "Operations.h"
-
+#include <Windows.h>
 class Loader {
 	Loader() = default;
 	Loader(Loader const &) = delete;

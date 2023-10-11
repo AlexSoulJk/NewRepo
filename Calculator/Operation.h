@@ -7,14 +7,12 @@ using priority_t = int;
 
 class Operation
 {
+protected:
 	priority_t priority;
+	FunType type;
 public:
-	Operation() = default;
-	Operation(Operation const&) = default;
-	Operation(Operation&&) = default;
-	Operation& operator=(Operation const&) = default;
-	Operation& operator=(Operation&&) = default;
-	~Operation(void) = default;
-	virtual double getValue(std::stack<double>&) const = 0;
+	virtual void getValue(std::stack<double>&, std::string const& token) const = 0;
+	priority_t getPriority(void) const noexcept { return priority; };
+	Operation(priority_t priority_, FunType type_) : priority(priority_), type(type_) {};
 };
 
