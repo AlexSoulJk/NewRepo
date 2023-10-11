@@ -7,7 +7,7 @@ class Loader {
 	Loader& operator=(Loader const&) = delete;
 	Loader& operator=(Loader&&) = delete;
 	Loader(Loader&&) = delete;
-	std::string const path = "./config\\DLib";
+	std::string const path = "./plugins\\DLib";
 public:
 	static Loader& getInstance() {
 		static Loader instance;
