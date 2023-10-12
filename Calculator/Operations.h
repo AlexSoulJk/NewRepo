@@ -1,15 +1,22 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include "Loader.h"
 #pragma once
-using namespace std;
+#include <map>
+#include "Operation_binary.h"
+#include "Operation_unary.h"
+
+
 class Operations
 {
-	map<string, Operation&> operations;
-	Loader& loader;
+	std::map<std::string, Operation*> operations;
 public:	
 	Operations();
-	Operations(string const& name_of_function);
+	Operations(Operations const&) = default;
+	Operations(Operations&&) = default;
+	Operations& operator=(Operations&&) = default;
+	Operations& operator=(Operations const&) = default;
+	~Operations() = default;
+	Operation* getValue(std::string const& name_of_function) noexcept;
+	bool isFunContains(std::string const& name_of_fun) noexcept;
+	priority_t getPriority(std::string const& name_of_function) noexcept;
+	void addFunction(Operation*, std::string const& functionName) noexcept;
 };
 

@@ -1,21 +1,17 @@
 #include <iostream>
-#include <string>
-#include <functional>
+#include <stack>
 #pragma once
-using namespace std;
+
+//enum class FunType { unary, binary };
+using priority_t = int;
 
 class Operation
 {
-	unsigned short priority;
-	std::function<double(double, double)> operation;
-	
+protected:
+	priority_t priority;
 public:
-	Operation() = default;
-	Operation(unsigned short priority_, std::function<double(double, double)> operation_) : priority(priority_), operation(operation_) {};
-	Operation(Operation const&) = default;
-	Operation(Operation&&) = default;
-	Operation& operator=(Operation const&) = default;
-	Operation& operator=(Operation&&) = default;
-	~Operation(void) = default;
+	virtual void getValue(std::stack<double>&, std::string const& token) const = 0;
+	priority_t getPriority(void) const noexcept { return priority; };
+	Operation(priority_t priority_) : priority(priority_) {};
 };
 

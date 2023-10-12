@@ -1,21 +1,28 @@
 #include<iostream>
 #include "Calculator.h"
-using namespace std;
+#include "ParserPolandAlg.h"
 
-/*This is a function that will check stop calculation*/
-bool IsFinish(void) {
-	cout << "Input S to stop calculation\n";
-	char c;
-	cin >> c;
-	return c == 'S';
-}
+/* template of .dll
+
+*/
+/* Test string:
+
+1/2 + sin(1/2)
+1. 2 + 3  4
+2. (5 - 2) / (3 + 1)
+3. 4  (6 - 2)
+4. 15 / (3 + 2)  4
+5. sin(30) + cos(60)
+6. cos(45) - tan(30)
+7. tan(0) + log(1)
+8. log(100) / log(10)
+9. 8 + 2  (3 + 1)
+10. (4 + 5) / (2 - 2)
+
+*/
+
 int main() {
-	bool is_finish = false;
-	Calculator& app = Calculator::getInstance();
-	while (!is_finish) {
-		app.start();
-		cout << "=" << app.Evalue() << endl;
-		is_finish = IsFinish();
-	}
-	cout << "Hello wrld!";
+	Parser* parser = new ParserPolandAlg();
+	Calculator& app = Calculator::getInstance(parser);
+	app.start();
 }
