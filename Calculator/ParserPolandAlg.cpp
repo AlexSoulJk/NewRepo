@@ -5,6 +5,7 @@ void CheckValidityofSymb(char c) {
 	if (c >= -1 && c <= 255) return;
 	throw std::exception("Invalid input expression");
 }
+
 std::string CatchNumber(std::string const& expression, int& index) {
 	int counter_points = 0;
 	std::string res = "";
@@ -29,14 +30,13 @@ std::string CatchFunction(std::string const& expression, int& index) {
 	}
 	return res;
 }
-std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & expression_) {
-    std::string expression = expression_;
-	std::string cur_number;
-	std::string current_fun = "";
-	std::string::size_type ind;
-	std::vector<std::string> result;
-	while ((ind = expression.find(' ')) != std::string::npos) expression.erase(ind, 1);
 
+void DeleteSpaces(std::string& expression) {
+	std::string::size_type ind;
+	while ((ind = expression.find(' ')) != std::string::npos) expression.erase(ind, 1);
+}
+
+void ConvertIntoUsebaleExpression(std::string& expression) {
 	for (int i = 0; i < expression.size(); ++i) { // (-num) to (0-num)
 		if ((expression[i] == '+' || expression[i] == '-') && (0 == i || (!isdigit(expression[i - 1]) && expression[i - 1] != '.' && expression[i - 1] != ')'))) {
 			auto it = std::find_if(expression.begin() + i + 1, expression.end(), [](char const c) {return !isdigit(c); });
@@ -45,9 +45,32 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 		}
 		CheckValidityofSymb(expression[i]);
 	}
+}
+
+void ParserPolandAlg::addFunctionIntoResult(std::string&& current_fun, std::stack<std::string>& stack, std::vector<std::string>& result) {
+	while (!stack.empty()) {
+		if (list_of_operations.getPriority(current_fun) <= list_of_operations.getPriority(stack.top())) {
+			result.push_back(stack.top());
+			stack.pop();
+		}
+		else {
+			stack.push(current_fun);
+			break;
+		}
+	}
+	if (stack.empty()) stack.push(current_fun);
+}
+std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & expression_) {
+
 	int i = 0;
 	char cur_symb;
 	std::stack<std::string> stack;
+    std::string expression = expression_;
+	std::string cur_number;
+	std::string current_fun = "";
+	std::vector<std::string> result;
+	DeleteSpaces(expression);
+	ConvertIntoUsebaleExpression(expression);
 	while (i < expression.size()) {
 		cur_symb = expression[i];
 		if (isdigit(cur_symb)) {
@@ -56,19 +79,8 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 		}
 		else if (isalpha(cur_symb)) {
 			current_fun = CatchFunction(expression, i);
-			//thinking about downloading func
 			if (!list_of_operations.isFunContains(current_fun)) loader.loadFunction(current_fun, list_of_operations);
-			while (!stack.empty()) {
-				if (list_of_operations.getPriority(current_fun) <= list_of_operations.getPriority(stack.top())) {
-					result.push_back(stack.top());
-					stack.pop();
-				}
-				else {
-					stack.push(std::move(current_fun));
-					break;
-				}
-			}
-			if (stack.empty()) stack.push(std::move(current_fun));
+			addFunctionIntoResult(std::move(current_fun), stack, result);
 		}
 		else if (cur_symb == '(') {
 			if (i != 0 && isdigit(expression[i - 1])) throw std::exception("Invalid expression front ( mustn't be a digit");
@@ -88,19 +100,7 @@ std::vector<std::string> ParserPolandAlg::convertIntoPoland(std::string const & 
 			i++;
 		}
 		else if (list_of_operations.isFunContains({ cur_symb })) { // нашли оператор
-			while (!stack.empty()) {
-				if (list_of_operations.getPriority({ cur_symb }) <= list_of_operations.getPriority(stack.top())) {
-					result.push_back(stack.top());
-					stack.pop();
-				}
-				else {
-					stack.push({ cur_symb });
-					break;
-				}
-			}
-			if (stack.empty()) {
-				stack.push({ cur_symb });
-			}
+			addFunctionIntoResult({cur_symb}, stack, result);
 			i++;
 		}
 		else throw std::runtime_error("Symbol is incorrect");

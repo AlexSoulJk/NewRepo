@@ -22,7 +22,7 @@
 */
 
 int main() {
-	Parser* parser = nullptr;
+	Parser* parser = new ParserPolandAlg();
 	Calculator& app = Calculator::getInstance(parser);
 	app.start();
 }

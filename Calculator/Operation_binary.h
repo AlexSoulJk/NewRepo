@@ -12,7 +12,7 @@ public:
 	Operation_binary& operator=(Operation_binary const&) = default;
 	Operation_binary& operator=(Operation_binary&&) = default;
 	~Operation_binary(void) = default;
-	Operation_binary(binary operation_, priority_t priority_) : Operation(priority_, FunType::binary), operation(operation_) {};
+	Operation_binary(binary operation_, priority_t priority_) : Operation(priority_), operation(operation_) {};
 	void getValue(std::stack<double>& values, std::string const & token ) const override {
 		if (values.empty()) throw std::exception("Not enough input arguments");
 		double argument1 = values.top();
