@@ -4,7 +4,6 @@
 #pragma once
 class Parser
 {
-	
 protected:
 	Operations list_of_operations;
 	Loader& loader;

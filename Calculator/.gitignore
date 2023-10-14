@@ -8,3 +8,4 @@ Calculator.vcxproj.user
 x64/Debug
 Debug/
 .gitattributes
+x64/
